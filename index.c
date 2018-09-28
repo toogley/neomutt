@@ -1609,7 +1609,11 @@ int mutt_index_menu(void)
           break;
         }
 
+// #ifdef HAVE_LIBUNWIND
+//         show_backtrace();
+// #endif
         // log_queue_save(fp);
+        dot_dump("index");
         dump_accounts(fp);
         mutt_file_fclose(&fp);
 
