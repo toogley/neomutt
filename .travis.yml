@@ -32,10 +32,15 @@ addons:
       - libxml2-utils
       - lua5.2
       - lynx
+      - python-pip
+      - python-software-properties
       - xsltproc
 
 git:
   depth: 3
+
+before_install:
+  - pip install --user cpp-coveralls
 
 install:
   - git clone --depth 1 https://github.com/neomutt/travis-build.git ~/config
@@ -49,7 +54,10 @@ before_script:
   - export -f travis_time_start
 
 script:
-  - ~/config/build
+  - ./configure --disable-doc --testing --coverage --everything && make && make test 
+
+after_success:
+  - coveralls --gcov-options '\-lp' --build-root . --include mutt --include email --include address --include config
 
 after_script:
   - ccache --show-stats
