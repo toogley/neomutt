@@ -442,6 +442,7 @@ distclean: clean
 		html Makefile po/Makefile test/Makefile
 	$(RM) *.gc?? */*.gc?? test/*/*.gc??
 	$(RM) lcov.info lcov
+	$(RM) zzz.inc doxygen-build.txt tmp.txt
 
 @if ENABLE_COVERAGE
 # coverage testing
@@ -451,6 +452,11 @@ coverage: all test
 	-genhtml -o lcov lcov.info -f
 	lcov -l lcov.info
 @endif
+
+# Web Code docs (doxygen)
+.PHONY: html $(PWD)/mutt
+html:
+	$(SRCDIR)/doxygen/generate.sh
 
 ##############################################################################
 # include generated dependency files
